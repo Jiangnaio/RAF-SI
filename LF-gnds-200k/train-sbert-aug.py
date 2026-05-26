@@ -51,12 +51,11 @@ def setup_logger(output_dir):
     return logger
 
 # ==================== 配置 ====================
-bsz=64
 CONFIG = {
     "seed": 42,
     "model_name": "/media/4t/2026/elmo-main/XMC/GND-Subject-test-arctic_m_v2/epoch-3",
     "max_length": 512,
-    "batch_size": bsz,
+    "batch_size": 32,
     "start_hard_neg_sampling_epoch": 1,
     "gradient_accumulation_steps": 1,
     "num_epochs": 100,
@@ -65,7 +64,6 @@ CONFIG = {
     "output_dir": "./XMC/GND-Subject-test-arctic1-epoch-3",
     "dataset_dir": "Datasets/GND-Subject-test",
     "train_file": "trn.json",
-    "train_aug_file": "trn-aug.json",
     "eval_file": "tst.json",
     "test_filter_file": 'filter_labels_test.txt',
     "label_pool_file": "lbl.json",
@@ -78,7 +76,7 @@ CONFIG = {
     "use_fv": True,
     "loss_type": "decoupled_softmax",
     "per_sample_pos_max": 6,
-    "num_neg_samples": bsz*3,
+    "num_neg_samples": 32*6,
     "temperature": 0.05,
     "eps": 1e-8,
     "use_instances_cluster": False,
@@ -141,19 +139,7 @@ class XMCDataset(Dataset):
         if debug_mode:
             examples = examples[:debug_size]
         if for_train:
-            train_aug_file = os.path.join(CONFIG["dataset_dir"], CONFIG["train_aug_file"])
-            if os.path.exists(train_aug_file):
-                with open(train_aug_file, 'r', encoding='utf-8') as f:
-                    for line in f:
-                        item=json.loads(line)
-                        query= item['title'] if 'titles' in data_file.lower() else item['title']+': '+item['content']
-                        examples.append({
-                            "query": query[:CONFIG["max_length"]*10],
-                            "pos_ind": item["target_ind"]
-                        })
-            # 随即打乱训练数据
-            random.shuffle(examples)
-            self.examples = examples
+            self.examples = examples[:int(len(examples)*CONFIG["train_samples_limit_rate"])]
         self.examples = examples
         assert len(examples) > 0, f"Empty dataset: {data_file}"
         
@@ -1001,8 +987,8 @@ def main():
 
         if (epoch+1) % CONFIG["save_epochs"]==0:
             augmenter.save_augmenter(tokenizer, f"{CONFIG['output_dir']}/epoch-{epoch+1}")
-            # evaluate_with_metrics(augmenter, tokenizer, eval_dataset, label_texts, device, dtype, 
-            #                 tau=0.05, top_k=101, test_filter_file=CONFIG["test_filter_file"]) 
+            evaluate_with_metrics(augmenter, tokenizer, eval_dataset, label_texts, device, dtype, 
+                            tau=0.05, top_k=101, test_filter_file=CONFIG["test_filter_file"]) 
             
     augmenter.save_augmenter(tokenizer, f"{CONFIG['output_dir']}/final")
     logger.info("✅ Training completed.")
