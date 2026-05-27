@@ -12,8 +12,16 @@ llms4subjects/EURLex-4k is format: see Datasets/
 
 
 ### llms4subjects train
+
 python train-sbert.py
+
+
 python train-sbert-aug.py
+
+
 python train-sbert-rerank.py
+
+
 ### llms4subjects eval
+
 python 8-eval-rrf.py --model_path /media/4t/2026/elmo-main/XMC/GND-Subject-test-arctic_m_v2-epoch-3/final --dataset_dir Datasets/GND-Subject-test --reranker_path Results/rerank/GND-Subject-test/model/reranker-final.pth --rrf_k 3
