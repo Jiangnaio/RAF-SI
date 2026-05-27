@@ -7,11 +7,12 @@ llms4subjects: https://github.com/jd-coderepos/llms4subjects/tree/main/shared-ta
 EURLex-4k: see https://colab.research.google.com/github/nilesh2797/DEXML/blob/main/dexml.ipynb
 
 llms4subjects/EURLex-4k is format: see https://sandbox.zenodo.org/records/504982
+
+```latex  
   lbl.json
-  
   trn.json
-  
   tst.json
+```
 
 ### model
 
