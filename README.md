@@ -8,10 +8,11 @@ EURLex-4k: see https://colab.research.google.com/github/nilesh2797/DEXML/blob/ma
 
 llms4subjects/EURLex-4k is format: see https://sandbox.zenodo.org/records/504982
 
-```latex  
-  lbl.json
-  trn.json
-  tst.json
+```latex
+Datasets/llms4subjecs-xmc
+  --lbl.json
+  --trn.json
+  --tst.json
 ```
 
 ### requirements
