@@ -32,5 +32,7 @@ python train-sbert-rerank.py --model_path XMC/GND-Subject-test-arctic_m_v2/final
 
 
 ### llms4subjects eval
-
-python eval-rrf.py --model_path /media/4t/2026/elmo-main/XMC/GND-Subject-test-arctic_m_v2-epoch-3/final --dataset_dir Datasets/GND-Subject-test --reranker_path Results/rerank/GND-Subject-test/model/reranker-final.pth --rrf_k 3
+```bash
+cp XMC/llms4subjecs-xmc-arctic-epoch-3/final/augmenter_state.bin XMC/GND-Subject-test-arctic_m_v2/final
+python eval-rrf.py --model_path /media/4t/FireFox-Download/test/RAF-SI-main/XMC/GND-Subject-test-arctic_m_v2/final --dataset_dir Datasets/llms4subjecs-xmc --reranker_path Results/rerank/llms4subjecs-xmc/model/reranker-final.pth --rrf_k 3
+```
