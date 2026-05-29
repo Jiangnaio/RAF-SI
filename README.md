@@ -24,14 +24,11 @@ python setup.py install
 ```
 
 ### llms4subjects train
-
+```bash
 python train-sbert.py
-
-
 python train-sbert-aug.py
-
-
-python train-sbert-rerank.py
+python train-sbert-rerank.py --model_path XMC/GND-Subject-test-arctic_m_v2/final --dataset_dir Datasets/llms4subjecs-xmc
+```
 
 
 ### llms4subjects eval
