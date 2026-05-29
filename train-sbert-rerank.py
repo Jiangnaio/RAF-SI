@@ -4,7 +4,7 @@
 重排序训练与评估脚本
 输出目录: Results/{dataset}/rerank/
 支持标签增强开关: --use_label_augmentation
-python 7_train-rerank.py --model_path /media/4t/2026/elmo-main/XMC/GND-Subject-test-arctic_m_v2/final --dataset_dir Datasets/GND-Subject-test
+python train-sbert-rerank.py --model_path XMC/GND-Subject-test-arctic_m_v2/final --dataset_dir Datasets/llms4subjecs-xmc
 
 """
 import os, sys, json, argparse, time, gc, warnings, math, logging
@@ -643,9 +643,9 @@ def main():
     parser.add_argument("--max_length", type=int, default=512)
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--embed_batch_size", type=int, default=128)
-    parser.add_argument("--candidate_pool", type=int, default=100)
-    parser.add_argument("--retrieval_topk", type=int, default=100)
-    parser.add_argument("--rerank_topk", type=int, default=100)
+    parser.add_argument("--candidate_pool", type=int, default=200)
+    parser.add_argument("--retrieval_topk", type=int, default=200)
+    parser.add_argument("--rerank_topk", type=int, default=200)
     parser.add_argument("--final_topk", type=int, default=100)
     parser.add_argument("--hidden_dim", type=int, default=512)
     parser.add_argument("--lr", type=float, default=1e-3)
@@ -753,8 +753,8 @@ def main():
                             "query": query[:CONFIG["max_length"]*10],
                             "target_ind": item["target_ind"]
                         })
-            else:
-                raise FileNotFoundError(f"Train aug file not found: {train_aug_path}")
+            # else:
+            #     raise FileNotFoundError(f"Train aug file not found: {train_aug_path}")
             train_gt = [set(ex["target_ind"]) for ex in train_examples]
             
             # 编码训练集query
