@@ -35,7 +35,7 @@ CONFIG = {
     "learning_rate": 5e-5, #在大batch_size下，可以考虑较大的学习率
     "warmup_ratio": 0.1,
     "output_dir": "./XMC/GND-Subject-test-arctic_m_v2",
-    "dataset_dir": "Datasets/GND-Subject-test",
+    "dataset_dir": "Datasets/llms4subjecs-xmc",
     "train_file": "trn.json",
     "eval_file": "tst.json",
     "test_filter_file": 'filter_labels_test.txt',  # 可选：过滤文件路径
@@ -478,7 +478,7 @@ def main():
         config.use_memory_efficient_attention = False
 
     # 加载tokenizer和模型
-    tokenizer = AutoTokenizer.from_pretrained(CONFIG["model_name"])
+    tokenizer = AutoTokenizer.from_pretrained(CONFIG["model_name"], trust_remote_code=True)
     if 'arctic' in CONFIG["model_name"]:
         model = AutoModel.from_pretrained(
             CONFIG["model_name"], 
