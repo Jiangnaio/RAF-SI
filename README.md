@@ -15,11 +15,12 @@ llms4subjects/EURLex-4k is format: see https://sandbox.zenodo.org/records/504982
 ```
 
 ### requirements
+```bash
 git clone https://github.com/kunaldahiya/pyxclib.git
 cd pyxclib
 python setup.py install --user
 pip install -r requirements.txt
-
+```
 
 ### llms4subjects train
 
