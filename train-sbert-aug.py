@@ -53,7 +53,7 @@ def setup_logger(output_dir):
 # ==================== 配置 ====================
 CONFIG = {
     "seed": 42,
-    "model_name": "/media/4t/2026/elmo-main/XMC/GND-Subject-test-arctic_m_v2/epoch-3",
+    "model_name": "XMC/GND-Subject-test-arctic_m_v2/epoch-3",
     "max_length": 512,
     "batch_size": 32,
     "start_hard_neg_sampling_epoch": 1,
@@ -61,8 +61,8 @@ CONFIG = {
     "num_epochs": 100,
     "learning_rate": 5e-5,
     "warmup_ratio": 0.1,
-    "output_dir": "./XMC/GND-Subject-test-arctic1-epoch-3",
-    "dataset_dir": "Datasets/GND-Subject-test",
+    "output_dir": "./XMC/llms4subjecs-xmc-arctic-epoch-3",
+    "dataset_dir": "Datasets/llms4subjecs-xmc",
     "train_file": "trn.json",
     "eval_file": "tst.json",
     "test_filter_file": 'filter_labels_test.txt',
@@ -735,8 +735,8 @@ class Augmenter(nn.Module):
         return q_emb, t_emb
 
     def save_augmenter(self, tokenizer, output_dir):
-        timestamp = datetime.now().strftime("%Y%m%d%H")
-        save_dir = f"{output_dir}_{timestamp}"
+      
+        save_dir = output_dir
         os.makedirs(save_dir, exist_ok=True)
         
         # self.encoder.save_pretrained(save_dir)#由于该模型没有训练，故而不需要保存
